@@ -7,11 +7,13 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 const generateAccessAndRefreshTokens=async(userId)=>{
     try {
         const user=await User.findById(userId);
-        const accessToken=user.generateAccessToken()
-        const refreshToken=user.generateRefreshToken()
+        const accessTokenpr=user.generateAccessToken()
+        const refreshTokenpr=user.generateRefreshToken()
+        let refreshToken;
+        await refreshTokenpr.then((token)=>{refreshToken=token})
         user.refreshToken=refreshToken
         await user.save({validateBeforeSave:false})
-        return {accessToken,refreshToken};
+        return {accessTokenpr,refreshTokenpr};
     } catch (error) {
         throw new ApiError(500,"Something went wrong while generating access and refresh tokens")
     }
@@ -40,7 +42,8 @@ const registerUser=asyncHandler( async (req,res)=>{
     })
     if(existedUser){
         throw new ApiError(409, "User with email or username exists")
-    }const avatarLocalPath=req.files?.avatar[0]?.path
+    }
+    const avatarLocalPath=req.files?.avatar[0]?.path
     // const coverImageLocalPath=req.files?.coverImage[0]?.path
     let coverImageLocalPath;
     if(req.files&& Array.isArray(req.files.coverImage)&& req.files.coverImage.length>0){
@@ -89,8 +92,19 @@ const loginUser= asyncHandler(async(req,res)=>{
     if(!isPasswordValid){
         throw new ApiError(401,"Incorrect Password")
     }
-    const {accessToken,refreshToken}=await generateAccessAndRefreshTokens(user._id)
-
+    const {accessTokenpr,refreshTokenpr}=await generateAccessAndRefreshTokens(user._id)
+    let accessToken;
+    let refreshToken;
+    await accessTokenpr.then((token)=>{
+        accessToken=token;
+       }).catch(error => {
+        console.error('accessToken promise Error:', error);
+    });
+       await refreshTokenpr.then((token)=>{
+        refreshToken=token;
+       }).catch(error => {
+        console.error('refreshToken promise Error:', error);
+    });
     const loggedInUser=await User.findById(user._id).select("-password -refreshToken")
     const options={
         httpOnly:true,
@@ -113,8 +127,8 @@ const logoutUser=asyncHandler(async(req,res)=>{
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set:{
-                refreshToken: undefined
+            $unset:{
+                refreshToken:1
             }
         },{
             new:true
