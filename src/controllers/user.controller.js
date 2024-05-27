@@ -4,6 +4,7 @@ import { User } from "../models/user.models.js";
 import { deleteCloudinary, uploadCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
+import mongoose from "mongoose";
 const generateAccessAndRefreshTokens=async(userId)=>{
     //remember whenever this controller is called just dont ever change the parameters name otherwise error will be called
     try {
@@ -129,7 +130,7 @@ const logoutUser=asyncHandler(async(req,res)=>{
         req.user._id,
         {
             $unset:{
-                refreshToken:1
+                refreshToken:1 //this removes field from document
             }
         },{
             new:true
@@ -280,8 +281,10 @@ const getUserChannelProfile=asyncHandler(async (req,res)=>{
         {
             $match:{
                 username:username?.toLowerCase()
+                
             }
-        },{
+        },
+        {
             $lookup:{
                 from:"subscription",
                 localField:"_id",
@@ -305,9 +308,9 @@ const getUserChannelProfile=asyncHandler(async (req,res)=>{
                 },
                 isSubscribed:{
                     $cond: {
-                        if: {$in: [req.user?._id,"sunscribers.subscriber"]},
+                        if: {$in: [req.user?._id,"$subscribers.subscriber"]},
                         then:true,
-                        else:true
+                        else:false
                     }
                 }
             }
@@ -324,7 +327,6 @@ const getUserChannelProfile=asyncHandler(async (req,res)=>{
             }
         }
     ])
-    console.log(channel)
     if(!channel?.length){
         throw new ApiError(404,"Channel does not exists")
     }
@@ -362,7 +364,9 @@ const getWatchHistory=asyncHandler(async (req,res)=>{
                                     }
                                 }
                             ]
+                           }
                         },
+                        {
                         $addFields:{
                             owner:{
                                 $first:"$owner"
