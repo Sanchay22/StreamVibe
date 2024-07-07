@@ -6,9 +6,9 @@ const likeSchema=new Schema({
     },comment:{
         type:Schema.Types.ObjectId,
         ref:"Comment"
-    },tweet:{
+    },vibe:{
         type:Schema.Types.ObjectId,
-        ref:"Tweet"
+        ref:"Vibe"
     },likedBy:{
         type:Schema.Types.ObjectId,
         ref:"User"

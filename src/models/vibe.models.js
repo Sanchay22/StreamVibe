@@ -1,5 +1,5 @@
 import mongoose,{Schema} from "mongoose"
-const tweetSchema=new Schema({
+const vibeSchema=new Schema({
     content:{
         type:String,
         required:true
@@ -9,4 +9,4 @@ const tweetSchema=new Schema({
         ref:"User"
     }
 },{timestamps:true})
-export const Tweet=mongoose.model("Tweet",tweetSchema)
+export const Vibe=mongoose.model("Vibe",vibeSchema)
