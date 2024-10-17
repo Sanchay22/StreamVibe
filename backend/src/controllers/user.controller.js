@@ -208,11 +208,17 @@ const changeCurrentPassword= asyncHandler(async(req,res)=>{
     )
 
 })
-const getCurrentUser=asyncHandler(async(req,res)=>{
-    return res
-    .status(200)
-    .json(200,req.user,"current user fetched successully")
-})
+const getCurrentUser = asyncHandler(async (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "User not authenticated" });
+    }
+    return res.status(200).json({
+        status: 200,
+        user: req.user,
+        message: "Current user fetched successfully"
+    });
+});
+
 const updateAccountDetails=asyncHandler(async(req,res)=>{
     const {newFullname,newEmail}=req.body
     if(!fullname||!email){
@@ -336,6 +342,9 @@ const getUserChannelProfile=asyncHandler(async (req,res)=>{
         new ApiResponse(200,channel[0],"User channel fetched successfully")
     )
 })
+const validateTokenRouter=asyncHandler(async(req,res)=>{
+    res.status(200).json(new ApiResponse(200,req.user,"User logged in"));
+})
 const getWatchHistory=asyncHandler(async (req,res)=>{
     const user=await User.aggregate([
         {
@@ -394,5 +403,6 @@ export  {
     updateUserAvatar,
     updateUserCover,
     getUserChannelProfile,
-    getWatchHistory
+    getWatchHistory,
+    validateTokenRouter
 }

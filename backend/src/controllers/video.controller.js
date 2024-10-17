@@ -50,12 +50,12 @@ const publishAVideo = asyncHandler(async (req, res) => {
     // console.log("Sab changa see");
     const createdVideo=await Video.findById(video._id)
     if(!createdVideo){
-        throw new ApiError(500, "Something went wrong while registering the user")
+        throw new ApiError(500, "Something went wrong while uploading the video")
     }
     // console.log(videor);
     // console.log(thumbnailr);
     return res.status(201).json(
-        new ApiResponse(200,video,"User registered Successfully")
+        new ApiResponse(200,video,"Video uploaded Successfully")
     )
 
 })
