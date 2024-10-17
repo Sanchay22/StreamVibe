@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from '../apiClient'; // Make sure apiClient.register handles file uploads
 import { useAppContext } from "../contexts/AppContext";
 import { Link, useNavigate } from "react-router-dom";
-
+import Button from "../components/Button"
 const Register = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -73,7 +73,7 @@ const Register = () => {
         <div className='flex bg-custom-gradient gap-4'>
             <div className='relative flex h-screen w-4/6 bg-cover bg-center bg-no-repeat'>
                 <img src="/login_bg.jpg" alt="Background" className='absolute inset-0 w-full h-full object-cover opacity-60' />
-                <div className='absolute inset-0 bg-black bg-opacity-30'></div>
+                <div className='absolute inset-0 bg-black bg-opacity-10'></div>
             </div>
 
             {/* Right panel with form */}
@@ -175,16 +175,11 @@ const Register = () => {
                     </div>
 
                     {/* Register Button and Login Link */}
-                    <div className="flex justify-between items-center mt-4 gap-2">
+                    <div className="flex justify-between items-center mt-2 gap-2 pb-4 ">
                         <span className="text-sm text-amber-500">
                             Already Registered? <Link className="underline hover:text-amber-600" to="/login">Click here</Link>
                         </span>
-                        <button
-                            type="submit"
-                            className="rounded-lg px-6 py-2 bg-amber-700 text-white font-bold hover:bg-amber-600 transition-colors duration-300"
-                        >
-                            Register
-                        </button>
+                        <Button first={"JOIN"}  second={"THE VIBE"}/>
                     </div>
                 </form>
             </div>

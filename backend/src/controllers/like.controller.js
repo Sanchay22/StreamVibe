@@ -42,22 +42,6 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
     }return res.status(201).json(new ApiResponse(200,newLike,"Liked successfully"))
 })
 
-const toggleVibeLike = asyncHandler(async (req, res) => {
-    const {vibeId} = req.params
-    //TODO: toggle like on vibe
-    if(!vibeId){
-        throw new ApiError(400,"Vibe id is missing");
-    }
-    const oldLikestaus=await Like.findOne({vibe:vibeId,likedBy:req.user._id});
-    if(oldLikestaus){
-        const newstatus=await Like.deleteOne({vibe:vibeId,likedBy:req.user._id})
-        return res.status(201).json(new ApiResponse(200,newstatus,"Unliked successfully"))
-    }const newLike= await Like.create({vive:vibeId,likedBy:req.user._id});
-    if(!newLike){
-        throw new ApiError(500,"Some error occured in creating like");
-    }return res.status(201).json(new ApiResponse(200,newLike,"Liked successfully"))
-}
-)
 
 const getLikedVideos = asyncHandler(async (req, res) => {
     //TODO: get all liked videos

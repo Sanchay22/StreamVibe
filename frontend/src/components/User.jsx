@@ -89,10 +89,10 @@ const User = () => {
                         {dropdownOpen && (
                             <div className="absolute right-0 top-12 bg-white border border-gray-200 rounded-lg shadow-lg w-40 z-10 overflow-hidden">
                                 <ul className="text-gray-700">
-                                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate(`/user/${userData.user.id}`)}>
+                                    <li className="border border-amber-600 rounded py-2 px-3 text-amber-600 font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 hover:bg-gray-100 cursor-pointer" onClick={() => navigate(`/user/${userData.user.id}`)}>
                                         Profile
                                     </li>
-                                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
+                                    <li className="border border-amber-600 rounded py-2 px-3 text-amber-600 font-bold focus:outline-none focus:ring-2 focus:ring-amber-400 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
                                         Logout
                                     </li>
                                 </ul>

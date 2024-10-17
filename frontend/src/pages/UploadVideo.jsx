@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import * as apiClient from "../apiClient"
+import * as apiClient from "../apiClient";
+import Button from '../components/Button'; // Import your Button component
+
 const VideoUploadForm = () => {
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
   const [videoPreview, setVideoPreview] = useState(null);
@@ -91,6 +93,7 @@ const VideoUploadForm = () => {
               name="videoFile"
               accept="video/*"
               onChange={handleFileChange}
+              required
               className="border border-amber-600 rounded py-2 px-3 text-amber-600 font-bold focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
           </div>
@@ -103,6 +106,7 @@ const VideoUploadForm = () => {
               name="thumbnail"
               accept="image/*"
               onChange={handleFileChange}
+              required
               className="border border-amber-600 rounded py-2 px-3 text-amber-600 font-bold focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
             {thumbnailPreview && (
@@ -117,12 +121,7 @@ const VideoUploadForm = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="rounded-lg px-6 py-2 bg-amber-700 text-white font-bold hover:bg-amber-600 transition-colors duration-300"
-          >
-            Upload
-          </button>
+          <Button first={"UPLOAD"} second={"THE VIBE"} /> {/* Use your custom Button component */}
         </form>
       </div>
     </div>
