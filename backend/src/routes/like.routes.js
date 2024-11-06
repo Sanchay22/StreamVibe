@@ -3,7 +3,6 @@ import {
     getLikedVideos,
     toggleCommentLike,
     toggleVideoLike,
-    toggleVibeLike,
 } from "../controllers/like.controller.js"
 import {verifyJWT} from "../middlewares/auth.middleware.js"
 

@@ -4,12 +4,14 @@ import * as apiClient from '../apiClient';
 import Toast from "../components/Toast";
 
 // Create the context with a default value of undefined
-const AppContext = createContext(undefined);
+const AppContext = React.createContext(undefined);
 
 export const AppContextProvider = ({ children }) => {
     const [toast, setToast] = useState(undefined);
     const { isError } = useQuery("validateToken", apiClient.validateToken, {
         retry: false,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        cacheTime: 10 * 60 * 1000,
     });
 
     return (

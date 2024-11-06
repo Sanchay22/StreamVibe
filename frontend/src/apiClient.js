@@ -70,3 +70,19 @@ export const uploadVideo=async(formData)=>{
     }
     return body;
 }
+
+// api.js
+export const getAllVideos = async (page = 1, limit = 20) => {
+    const response = await fetch(`${API_BASE_URL}/api/v1/videos?page=${page}&limit=${limit}`, {
+      credentials: "include",
+      method: "GET",
+    });
+    
+    const body = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(body.message);
+    }
+    
+    return body.data;  // Access 'data' from the response
+  };

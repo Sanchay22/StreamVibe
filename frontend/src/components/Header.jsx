@@ -1,23 +1,34 @@
-import React from 'react'
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import User from './User';
+
 function Header() {
+  const location = useLocation();
+
   return (
     <div className='bg-custom-gradient text-amber-500 h-max'>
-     <div className='flex'>
+      <div className='flex justify-between items-center p-4'>
         <div>
-            <div className='font-bold text-4xl'>
+          <Link to="/" className='font-bold text-4xl'>
             StreamVibe
-            </div>
-            <div className='text-2xl font-semibold'>
+          </Link>
+          <div className='text-2xl font-semibold'>
             Stream Your Story, Share the Vibe
-            </div>
+          </div>
         </div>
-        <div className='absolute top-4 right-4'>
-            <User />
+        <div className='flex items-center space-x-4'>
+          {location.pathname !== '/uploadvideo' && (
+            <Link to="/uploadvideo">
+              <button className='bg-amber-600 text-white font-bold py-2 px-4 rounded hover:bg-amber-700 transition-colors duration-300'>
+                Upload Video
+              </button>
+            </Link>
+          )}
+          <User />
         </div>
-     </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Header;
