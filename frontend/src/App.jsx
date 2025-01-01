@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import CurrentUser from "./pages/CurrentUser";
 import UploadVideo from "./pages/UploadVideo";
+import VideoDetail from "./pages/VideoDetail"; // Import the VideoDetail component
 import Header from "./components/Header";
 import { AppContextProvider, useAppContext } from "./contexts/AppContext"; // Adjust the import path as needed
 import Register from "./pages/Register";
@@ -10,7 +11,7 @@ import Register from "./pages/Register";
 const App = () => {
   const { isLoggedIn } = useAppContext();
   return (
-      
+    <AppContextProvider>
       <Router>
         <Routes>
           <Route path="/" element={<><Header /><Home /></>} />
@@ -23,8 +24,10 @@ const App = () => {
         <UploadVideo />
         </>} />
       )}
+          <Route path="/video" element={<VideoDetail />} /> {/* Add this route */}
         </Routes>
       </Router>
+    </AppContextProvider>
   );
 };
 
